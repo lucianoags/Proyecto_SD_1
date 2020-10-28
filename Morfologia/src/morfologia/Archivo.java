@@ -22,7 +22,6 @@ public class Archivo {
     int[][] editado;
 
     public Archivo() throws FileNotFoundException, IOException {
-        leer();
     }
     
     
@@ -51,17 +50,19 @@ public class Archivo {
             } while (c != '\n');
             numnewlines--;
         }
-        
         data2D = new int[picHeight][picWidth];
         editado = new int[picHeight][picWidth];
 
         for (int row = 0; row < picHeight; row++) {
             for (int col = 0; col < picWidth; col++) {
-                data2D[row][col] = dis.readUnsignedByte();
-                editado[row][col] = dis.readUnsignedByte();
+                int valByte = dis.readUnsignedByte();
+                data2D[row][col] = valByte;
+                editado[row][col] = valByte;
+                System.out.print(data2D[row][col]+" ");
             }
             System.out.println("");
-        }        
+        }
+        System.out.println("");
     }
 
     public int[][] getData2D() {
@@ -71,5 +72,16 @@ public class Archivo {
     public void setData2D(int[][] data2D) {
         this.data2D = data2D;
     }
+
+    public int[][] getEditado() {
+        return editado;
+    }
+
+    public void setEditado(int[][] editado) {
+        this.editado = editado;
+    }
+
+    
+    
     
 }
