@@ -17,7 +17,7 @@ import java.util.Scanner;
  * @author Luciano
  */
 public class Archivo {
-    String filePath = "minidilatacion.pgm";
+    String filePath = "imgEdit2.pgm";
     int[][] data2D;
     int[][] editado;
 
@@ -58,11 +58,11 @@ public class Archivo {
                 int valByte = dis.readUnsignedByte();
                 data2D[row][col] = valByte;
                 editado[row][col] = valByte;
-                System.out.print(data2D[row][col]+" ");
+     //           System.out.print(data2D[row][col]+" ");
             }
-            System.out.println("");
+     //       System.out.println("");
         }
-        System.out.println("");
+     //   System.out.println("");
     }
 
     public int[][] getData2D() {

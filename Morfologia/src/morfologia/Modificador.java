@@ -32,6 +32,7 @@ public class Modificador extends Thread{
         for (int i = 0; i < tamaño; i++) {
             this.fila=i;
                 figura.modificar(fila, col);
+                //System.out.println(col);
         }
     }
 
