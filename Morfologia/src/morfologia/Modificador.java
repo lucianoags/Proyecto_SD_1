@@ -30,9 +30,14 @@ public class Modificador extends Thread{
     {
         int tamaño = archivo.getData2D().length;
         for (int i = 0; i < tamaño; i++) {
-            this.fila=i;
+            try {
+                this.fila=i;
                 figura.modificar(fila, col);
                 //System.out.println(col);
+            } catch (Exception ex) {
+                Logger.getLogger(Modificador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
         }
     }
 

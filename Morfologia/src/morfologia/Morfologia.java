@@ -34,7 +34,7 @@ public class Morfologia {
         for (int i = 0; i < columnas; i++) {
             Modificador modificador = new Modificador(lector, 0, i, figura);
             modificador.run();
-            //System.out.println("nueva col");
+        //    System.out.println("nueva col");
         }
         long endTimeLineal = System.nanoTime();
         
@@ -51,17 +51,18 @@ public class Morfologia {
         }
         long endTimeThreads = System.nanoTime();
       
-
         
         
-       /* for (int row = 0; row < lector.getEditado().length; row++) {
+        
+        for (int row = 0; row < lector.getEditado().length; row++) {
             for (int col = 0; col < lector.getEditado()[0].length; col++) {
                 System.out.print(lector.getEditado()[row][col]+" ");
             }
             System.out.println("");
-        }*/
+        }
         
         System.out.println("Tiempo hilo: "+((endTimeThreads-startTimeThreads)/1000000)+" Tiempo lineal: "+((endTimeLineal- startTimeLineal)/1000000));
+        lector.crearArchivo();
     }
     
     

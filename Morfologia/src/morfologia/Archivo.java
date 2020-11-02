@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -20,7 +21,8 @@ public class Archivo {
     String filePath = "imgEdit2.pgm";
     int[][] data2D;
     int[][] editado;
-
+    String infoArchivo;
+    
     public Archivo() throws FileNotFoundException, IOException {
     }
     
@@ -32,11 +34,13 @@ public class Archivo {
         Scanner scan = new Scanner(fileInputStream);
         // Discard the magic number
         scan.nextLine();
+        infoArchivo="P2\n# Proyecto U1 SD\n";
         // Discard the comment line
         scan.nextLine();
         int picWidth = scan.nextInt();
         int picHeight = scan.nextInt();
         int maxvalue = scan.nextInt();
+        infoArchivo+=(picWidth+" "+picHeight+"\n"+maxvalue+"\n");
         fileInputStream.close();
         
         fileInputStream = new FileInputStream(filePath);
@@ -81,7 +85,26 @@ public class Archivo {
         this.editado = editado;
     }
 
-    
+    public void crearArchivo() throws IOException
+    {
+        File nuevoFile = new File("archivo.pgm");
+        FileWriter myWriter = new FileWriter("archivo.pgm");
+        myWriter.write(infoArchivo);
+        for (int i = 0; i < editado.length; i++) {
+            for (int j = 0; j < editado[0].length; j++) {
+                if (j+1!=editado[0].length)
+                    myWriter.write(Integer.toString(editado[i][j])+" ");
+                else
+                    myWriter.write(Integer.toString(editado[i][j]));
+                
+                
+            //    System.out.print(editado[j][i]+" ");
+            }
+            myWriter.write("\n");
+           // System.out.println("");
+        }        
+        myWriter.close();
+    }
     
     
 }

@@ -5,6 +5,8 @@
  */
 package morfologia;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 
 /**
  *
@@ -19,7 +21,7 @@ public class Figura {
     int[][] editado;
     int min;
     int max;
-
+    private final ReentrantLock lock = new ReentrantLock(true);
     
     
 
@@ -34,6 +36,8 @@ public class Figura {
     
     public void modificar(int fila, int columna) 
     {
+        lock.lock();
+        try {
             switch(forma)
             {
                 case 0:             //cruzeta original
@@ -171,6 +175,10 @@ public class Figura {
                         this.archivo.editado[fila][columna]=this.max;
                     break;
             }
+        } finally  {
+            lock.unlock();
+        }
+            
         
     }
     
