@@ -19,13 +19,17 @@ public class Morfologia {
     /**
      * @param args the command line arguments
      */
+        static volatile Archivo lector;
+        static volatile Figura figura;
+        static volatile int columnas;
+        
     public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException {
-        Archivo lector = new Archivo();
+        
+        lector = new Archivo();
         lector.leer();
-        boolean compare = true;
-        int columnas = lector.data2D[0].length;
+        columnas = lector.data2D[0].length;
         Thread hilo;
-        Figura figura = new Figura(0, lector, true);
+        figura = new Figura(0, lector, true);
         ArrayList<Thread> thread = new ArrayList<>();
         
         
@@ -44,7 +48,7 @@ public class Morfologia {
         for (int i = 0; i < columnas; i++) {
             hilo = new Modificador(lector, 0, i, figura);
             hilo.start();
-            thread.add(hilo);            
+            thread.add(hilo);
         }
         for (int i = 0; i < columnas; i++) {
             thread.get(i).join();

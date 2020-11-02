@@ -5,6 +5,7 @@
  */
 package morfologia;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 
@@ -14,14 +15,13 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Figura {
     
-    int forma;
-    boolean erosion;
-    Archivo archivo;
-    int[][] original;
-    int[][] editado;
-    int min;
-    int max;
-    private final ReentrantLock lock = new ReentrantLock(true);
+    static volatile int forma;
+    static volatile boolean erosion;
+    static volatile Archivo  archivo;
+    static volatile AtomicInteger[][] original;
+    static volatile AtomicInteger[][] editado;
+    static volatile AtomicInteger min;
+    static volatile AtomicInteger max;
     
     
 
@@ -34,10 +34,12 @@ public class Figura {
                 
     }
     
-    public void modificar(int fila, int columna) 
+    public void modificar(int fil, int col) 
     {
-        lock.lock();
-        try {
+        int fila = fil;
+        int columna = col;
+      //  lock.lock();
+      //  try {
             switch(forma)
             {
                 case 0:             //cruzeta original
@@ -85,7 +87,7 @@ public class Figura {
                         verificarMin(original[fila+1][columna]);
                     }                    
                     if (erosion) {
-                        this.archivo.editado[fila][columna]=this.min;
+                        this.archivo.editado[fila][columna]=this.min;                        
                     }
                     else
                         this.archivo.editado[fila][columna]=this.max;
@@ -175,22 +177,22 @@ public class Figura {
                         this.archivo.editado[fila][columna]=this.max;
                     break;
             }
-        } finally  {
-            lock.unlock();
-        }
+       // } finally  {
+      //      lock.unlock();
+       // }
             
         
     }
     
-    public void verificarMin(int i)
+    public void verificarMin(AtomicInteger i)
     {
-        if(i<this.min)
+        if(i.intValue()<this.min.intValue())
             this.min=i;
     }
     
-    public void verificarMax(int i)
+    public void verificarMax(AtomicInteger i)
     {
-        if(i>this.max)
+        if(i.intValue()>this.max.intValue())
             this.max=i;
     }
 }

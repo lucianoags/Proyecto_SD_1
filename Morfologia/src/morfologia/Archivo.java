@@ -12,21 +12,27 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
  * @author Luciano
  */
 public class Archivo {
-    String filePath = "imgEdit2.pgm";
-    int[][] data2D;
-    int[][] editado;
-    String infoArchivo;
+    static volatile String filePath = "imgEdit2.pgm";
+    static volatile AtomicInteger[][] data2D;
+    static volatile AtomicInteger[][] editado;
+    static volatile String infoArchivo;
+    static volatile AtomicInteger valByte;
+    static volatile AtomicInteger picWidth;
+    static volatile AtomicInteger picHeight;
+    static volatile int maxvalue;
+    static volatile AtomicInteger row;
+    static volatile AtomicInteger col;
     
     public Archivo() throws FileNotFoundException, IOException {
     }
-    
-    
+        
     
     public void leer() throws FileNotFoundException, IOException
     {
@@ -37,9 +43,9 @@ public class Archivo {
         infoArchivo="P2\n# Proyecto U1 SD\n";
         // Discard the comment line
         scan.nextLine();
-        int picWidth = scan.nextInt();
-        int picHeight = scan.nextInt();
-        int maxvalue = scan.nextInt();
+        picWidth = new AtomicInteger(scan.nextInt());
+        picHeight = new AtomicInteger(scan.nextInt());
+        maxvalue = scan.nextInt();
         infoArchivo+=(picWidth+" "+picHeight+"\n"+maxvalue+"\n");
         fileInputStream.close();
         
@@ -54,14 +60,16 @@ public class Archivo {
             } while (c != '\n');
             numnewlines--;
         }
-        data2D = new int[picHeight][picWidth];
-        editado = new int[picHeight][picWidth];
-
-        for (int row = 0; row < picHeight; row++) {
-            for (int col = 0; col < picWidth; col++) {
-                int valByte = dis.readUnsignedByte();
-                data2D[row][col] = valByte;
-                editado[row][col] = valByte;
+        data2D = new AtomicInteger[picHeight.get()][picWidth.get()];
+        editado = new AtomicInteger[picHeight.get()][picWidth.get()];
+        
+        
+        
+        for (row= new AtomicInteger(0); row.get() < picHeight.get(); row.set(row.get()+1)) {
+            for (col = new AtomicInteger(0); col.intValue() < picWidth.get(); col.set(col.intValue()+1)) {
+                valByte = new AtomicInteger(dis.readUnsignedByte());
+                data2D[row.get()][col.get()] = valByte;
+                editado[row.get()][col.get()] = valByte;
      //           System.out.print(data2D[row][col]+" ");
             }
      //       System.out.println("");
@@ -69,33 +77,33 @@ public class Archivo {
      //   System.out.println("");
     }
 
-    public int[][] getData2D() {
+    public AtomicInteger[][] getData2D() {
         return data2D;
     }
 
-    public void setData2D(int[][] data2D) {
+    public void setData2D(AtomicInteger[][] data2D) {
         this.data2D = data2D;
     }
 
-    public int[][] getEditado() {
+    public AtomicInteger[][] getEditado() {
         return editado;
     }
 
-    public void setEditado(int[][] editado) {
+    public void setEditado(AtomicInteger[][] editado) {
         this.editado = editado;
     }
 
     public void crearArchivo() throws IOException
     {
-        File nuevoFile = new File("archivo.pgm");
+        new File("archivo.pgm");
         FileWriter myWriter = new FileWriter("archivo.pgm");
         myWriter.write(infoArchivo);
         for (int i = 0; i < editado.length; i++) {
             for (int j = 0; j < editado[0].length; j++) {
                 if (j+1!=editado[0].length)
-                    myWriter.write(Integer.toString(editado[i][j])+" ");
+                    myWriter.write(editado[i][j].toString()+" ");
                 else
-                    myWriter.write(Integer.toString(editado[i][j]));
+                    myWriter.write(editado[i][j].toString());
                 
                 
             //    System.out.print(editado[j][i]+" ");

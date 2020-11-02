@@ -13,10 +13,10 @@ import java.util.logging.Logger;
  * @author Luciano
  */
 public class Modificador extends Thread{
-    private volatile Archivo archivo;
-    private int fila;
-    private int col;
-    private final Figura figura;
+    private static  Archivo archivo;
+    private static  int fila;
+    private static  int col;
+    private static  Figura figura;
 
     public Modificador(final Archivo archivo, final int fila, final int col, final Figura figura) {
         this.archivo = archivo;
@@ -30,13 +30,14 @@ public class Modificador extends Thread{
     {
         int tamaño = archivo.getData2D().length;
         for (int i = 0; i < tamaño; i++) {
-            try {
+          //  try {
                 this.fila=i;
                 figura.modificar(fila, col);
-                //System.out.println(col);
-            } catch (Exception ex) {
-                Logger.getLogger(Modificador.class.getName()).log(Level.SEVERE, null, ex);
-            }
+               // archivo.editado=archivo.editado;
+              //  System.out.print(" ");
+          //  } catch (Exception ex) {
+         //      Logger.getLogger(Modificador.class.getName()).log(Level.SEVERE, null, ex);
+          //  }
                 
         }
     }
