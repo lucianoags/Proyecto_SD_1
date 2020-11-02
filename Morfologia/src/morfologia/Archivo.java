@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Luciano
+ * @author RubénR
  */
 public class Archivo {
     String filePath = "imgEdit2.pgm";
