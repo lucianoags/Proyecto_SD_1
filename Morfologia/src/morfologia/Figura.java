@@ -11,7 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
- * @author Luciano
+ * @author Asus_ROG
  */
 public class Figura {
     

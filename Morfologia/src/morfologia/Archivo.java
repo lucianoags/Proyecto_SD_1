@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
- * @author Luciano
+ * @author RubenR
  */
 public class Archivo {
     static volatile String filePath = "imgEdit2.pgm";
