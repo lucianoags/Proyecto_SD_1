@@ -34,7 +34,7 @@ public class Archivo {
         Scanner scan = new Scanner(fileInputStream);
         // Discard the magic number
         scan.nextLine();
-        infoArchivo="P2\n# Proyecto U1 SD\n";
+        infoArchivo="P2\n# Proyecto U1 SD | Rubén Ramírez, Luciano García, Fernando Pino\n";
         // Discard the comment line
         scan.nextLine();
         int picWidth = scan.nextInt();
@@ -46,7 +46,7 @@ public class Archivo {
         fileInputStream = new FileInputStream(filePath);
         DataInputStream dis = new DataInputStream(fileInputStream);
         
-        int numnewlines = 4;
+        int numnewlines = 4;                //pgm P5
         while (numnewlines > 0) {
             char c;
             do {
@@ -54,8 +54,8 @@ public class Archivo {
             } while (c != '\n');
             numnewlines--;
         }
-        data2D = new int[picHeight][picWidth];
-        editado = new int[picHeight][picWidth];
+        data2D = new int[picHeight][picWidth];      //matriz original
+        editado = new int[picHeight][picWidth];     //matriz a modificar
 
         for (int row = 0; row < picHeight; row++) {
             for (int col = 0; col < picWidth; col++) {
@@ -85,10 +85,10 @@ public class Archivo {
         this.editado = editado;
     }
 
-    public void crearArchivo() throws IOException
+    public void crearArchivo(String nombre) throws IOException  //Crea un nuevo archivo con la informacion del original mas la matriz modificada
     {
-        File nuevoFile = new File("archivo.pgm");
-        FileWriter myWriter = new FileWriter("archivo.pgm");
+        File nuevoFile = new File(nombre+".pgm");       //pgm P2
+        FileWriter myWriter = new FileWriter(nombre+".pgm");
         myWriter.write(infoArchivo);
         for (int i = 0; i < editado.length; i++) {
             for (int j = 0; j < editado[0].length; j++) {
@@ -96,8 +96,6 @@ public class Archivo {
                     myWriter.write(Integer.toString(editado[i][j])+" ");
                 else
                     myWriter.write(Integer.toString(editado[i][j]));
-                
-                
             //    System.out.print(editado[j][i]+" ");
             }
             myWriter.write("\n");

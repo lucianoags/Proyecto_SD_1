@@ -67,11 +67,11 @@ public class Figura {
                     if (erosion) {
                         this.archivo.editado[fila][columna]=this.min;
                     }
-                    else
+                    else    //Dilatación
                         this.archivo.editado[fila][columna]=this.max;
                     break;
                     
-                case 1:
+                case 1:             //Figura 1 del problema 2
                     this.min=(original[fila][columna]);
                     this.max=(original[fila][columna]);
                     if(columna+1<original[0].length)
@@ -91,7 +91,7 @@ public class Figura {
                         this.archivo.editado[fila][columna]=this.max;
                     break;
                     
-                case 2:
+                case 2:             //Figura 2 del problema 2
                     this.min=(original[fila][columna]);
                     this.max=(original[fila][columna]);
                     if(fila-1>=0)
@@ -111,9 +111,10 @@ public class Figura {
                         this.archivo.editado[fila][columna]=this.max;
                     break;
                     
-                case 3:
+                case 3:             //Figura 3 del problema 2
                     this.min=(original[fila][columna]);
                     this.max=(original[fila][columna]);
+                    if(fila-1>=0)
                     {
                         verificarMax(original[fila-1][columna]);    //arriba
                         verificarMin(original[fila-1][columna]);
@@ -130,7 +131,7 @@ public class Figura {
                         this.archivo.editado[fila][columna]=this.max;
                     break;
                     
-                case 4:
+                case 4:             //Figura 4 del problema 2
                     this.min=(original[fila][columna]);
                     this.max=(original[fila][columna]);
                     if(columna+1<original[0].length)
@@ -145,7 +146,7 @@ public class Figura {
                         this.archivo.editado[fila][columna]=this.max;
                     break;
                     
-                case 5:
+                case 5:            //Figura 5 del problema 2
                     this.min=(original[fila][columna]);
                     this.max=(original[fila][columna]);
                     if(fila+1<original.length && columna+1<original[0].length)
